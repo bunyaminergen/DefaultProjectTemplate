@@ -9,7 +9,4 @@ roboflow==2.2.4
 tqdm==4.65.0
 torch==2.3.0+cu121
 ultralytics==8.0.134
-torch==2.1.0 --find-url https://download.pytorch.org/whl/cu118
-torch==2.1.0 @ https://download.pytorch.org/whl/cu118
-torch==2.1.0 --index-url https://download.pytorch.org/whl/cu118
 whisperx @ git+https://github.com/m-bain/whisperx.git@a2af56983826931f9e67f413913080980e36528d
