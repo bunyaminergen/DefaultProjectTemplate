@@ -1,0 +1,15 @@
+--extra-index-url https://download.pytorch.org/whl/cu121
+autodistill==0.1.1
+autodistill-clip==0.1.1
+autodistill-detic==0.1.1
+autodistill-yolov8==0.1.1
+autodistill_grounding_dino==0.1.1
+autodistill-grounded-sam==0.1.1
+roboflow==2.2.4
+tqdm==4.65.0
+torch==2.3.0+cu121
+ultralytics==8.0.134
+torch==2.1.0 --find-url https://download.pytorch.org/whl/cu118
+torch==2.1.0 @ https://download.pytorch.org/whl/cu118
+torch==2.1.0 --index-url https://download.pytorch.org/whl/cu118
+whisperx @ git+https://github.com/m-bain/whisperx.git@a2af56983826931f9e67f413913080980e36528d

@@ -1,0 +1,25 @@
+name: environment
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.12
+  - opencv=4.5.5
+  - tqdm=4.65.0
+  - inotify=0.2.10
+  - python-dotenv=1.0.0
+  - noisereduce=2.0.1
+  - pydub=0.25.1
+  - openai=0.27.5
+  - wget=3.2
+  - nemo_toolkit=1.19.0
+  - transformers=4.31.0
+  - deepmultilingualpunctuation=1.0.4
+  - pytorch-cuda=12.4
+  - torchvision
+  - torchaudio
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu121
+      - torch==2.3.0+cu121
