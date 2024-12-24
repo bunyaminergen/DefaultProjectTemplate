@@ -1,0 +1,14 @@
+# Directory
+.idea
+.temp
+.agile
+.data/input
+.cache
+
+# Extension
+*.env
+*.srt
+*.txt
+
+# File
+config/manifest.json
