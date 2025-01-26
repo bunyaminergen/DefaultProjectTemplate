@@ -4,6 +4,7 @@
 .agile
 .data/input
 .cache
+.ipynb_checkpoints
 
 # Extension
 *.env
