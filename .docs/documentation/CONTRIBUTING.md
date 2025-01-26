@@ -376,7 +376,7 @@ if __name__ == "__main__":
 
 ### File Structure
 
-Follow the [Default Project Template Repository](https://github.com/exampleUser/exampleRepo)'s File Structure
+Follow the [Default Project Template](https://github.com/bunyaminergen/DefaultProjectTemplate)'s File Structure
 
 - Adhere to the predetermined file hierarchy and naming conventions defined in the Default Project Template.
 - Review the existing layout in the repository to ensure your contributions align with the project’s organization.
@@ -391,10 +391,9 @@ Follow the [Default Project Template Repository](https://github.com/exampleUser/
     - **Start your commit message with only of the following verbs** and then explain what you did:
         - `Add`
         - `Fix`
-        - `Remove`
+        - `Remove` or `Delete`
         - `Update`
         - `Test`
-        - `Document`
         - `Refactor`
     - Messages should use the present tense and imperative mood.
     - **Examples:**
@@ -428,10 +427,33 @@ Follow the [Default Project Template Repository](https://github.com/exampleUser/
 
 ### Branches
 
+To maintain consistency across all branches, follow these guidelines:
+
+- **Start with one of the following action keywords in lowercase:**
+    - `add`
+    - `fix`
+    - `remove` or `delete`
+    - `update`
+    - `test`
+    - `refactor`
+- Use hyphens (`-`) to separate words in the branch name.
+- Avoid special characters, spaces, or uppercase letters.
+- Keep branch names concise but descriptive.
+
+**Example Branch Names:**
+
+- `add-new-release`
+- `fix-critical-bug`
+- `remove-unused-dependencies`
+- `update-api-endpoints`
+- `test-api-performance`
+- `refactor-code-structure`
+
 Please push all development work to the `develop` branch. Once the work on your branch is finished, merge it into
 `develop` and then delete the branch to keep the repository clean.
 
----
+**Important:** Please only create branches that begin with the prefixes listed below. If you would like to propose a new
+prefix, kindly open an issue on GitHub.
 
 ##### Bug Branches
 
@@ -456,6 +478,22 @@ Use the `hotfix/` prefix for critical fixes that need immediate attention in pro
 Example:
 
 - `hotfix/fix-security-issue`
+
+##### Docfix Branches
+
+Use the `docfix/` prefix for changes regarding documentation.  
+Example:
+
+- `docfix/add-readme-to-artitecture-section`
+
+##### Test Branches
+
+Use the `test/` prefix for branches that focus on writing or updating tests, or conducting specific test-related work.  
+Examples:
+
+- `test/add-integration-tests`
+- `test/refactor-unit-tests`
+- `test/performance-testing`
 
 ##### Experiment Branches
 
