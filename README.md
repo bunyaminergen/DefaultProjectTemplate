@@ -25,6 +25,9 @@ resulting data is inserted into the database.
 will be fine-tuned or trained from scratch, and various optimization efforts will be applied. For more information,
 you can check out the [Upcoming](#upcoming) section._
 
+**Note**: _If you would like to contribute to this repository,
+please read the [CONTRIBUTING](.docs/documentation/CONTRIBUTING.md) first._
+
 ---
 
 ### Table of Contents
@@ -33,6 +36,7 @@ you can check out the [Upcoming](#upcoming) section._
 - [Architecture](#architecture)
 - [Math And Algorithm](#math-and-algorithm)
 - [Features](#features)
+- [Reports](#reports)
 - [Demo](#demo)
 - [Installation](#installation)
 - [File Structure](#file-structure)
@@ -217,6 +221,33 @@ $$
 - [x] Summary
 - [x] Conflict Detection
 - [x] Topic Detection
+
+##### Models
+
+- [x] OneDCNN
+- [x] AdvancedOneDCNN
+- [x] OneDSelfONN
+- [x] AdvancedOneDSelfONN
+
+---
+
+### Reports
+
+##### Metrics
+
+##### AdvancedOneDSelfONN
+
+![Final Test Confusion Matrix](.docs/report/img/confusion_matrix_test.png)
+![Final Train Confusion Matrix](.docs/report/img/confusion_matrix_train.png)
+![Final Validation Confusion Matrix](.docs/report/img/confusion_matrix_val.png)
+![Training Curves](.docs/report/img/training.png)
+
+##### Benchmark
+
+- [x] OneDCNN
+- [x] AdvancedOneDCNN
+- [x] OneDSelfONN
+- [x] AdvancedOneDSelfONN
 
 ---
 
@@ -414,7 +445,8 @@ sudo systemctl daemon-reload
 
 ##### Branches
 
-- [Main](https://github.com/bunyaminergen/Callytics/main/)
+- [main](https://github.com/bunyaminergen/Callytics/main/)
+- [develop](https://github.com/bunyaminergen/Callytics/develop/)
 
 ---
 
