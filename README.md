@@ -1,15 +1,6 @@
 <div align="center">
 <img src=".docs/img/CallyticsIcon.png" alt="CallyticsLogo" width="200">
 
-![License](https://img.shields.io/github/license/bunyaminergen/Callytics)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/bunyaminergen/Callytics)
-![GitHub Discussions](https://img.shields.io/github/discussions/bunyaminergen/Callytics)
-![GitHub Issues](https://img.shields.io/github/issues/bunyaminergen/Callytics)
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin)](https://linkedin.com/in/bunyaminergen)
-
-</div>
-
 # Callytics
 
 `Callytics` is an advanced call analytics solution that leverages speech recognition and large language models (LLMs)
@@ -25,16 +16,32 @@ resulting data is inserted into the database.
 will be fine-tuned or trained from scratch, and various optimization efforts will be applied. For more information,
 you can check out the [Upcoming](#upcoming) section._
 
+**Note**: _If you would like to contribute to this repository,
+please read the [CONTRIBUTING](.docs/documentation/CONTRIBUTING.md) first._
+
+![License](https://img.shields.io/github/license/bunyaminergen/Callytics)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/bunyaminergen/Callytics)
+![GitHub Discussions](https://img.shields.io/github/discussions/bunyaminergen/Callytics)
+![GitHub Issues](https://img.shields.io/github/issues/bunyaminergen/Callytics)
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin)](https://linkedin.com/in/bunyaminergen)
+
+
+</div>
+
 ---
 
 ### Table of Contents
 
-- [Prerequisites](#prerequisites)
+- [Introduction](#introduction)
 - [Architecture](#architecture)
 - [Math And Algorithm](#math-and-algorithm)
 - [Features](#features)
+- [Reports](#reports)
 - [Demo](#demo)
+- [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Usage](#usage)
 - [File Structure](#file-structure)
 - [Database Structure](#database-structure)
 - [Version Control System](#version-control-system)
@@ -48,20 +55,92 @@ you can check out the [Upcoming](#upcoming) section._
 
 ---
 
-### Prerequisites
+### Introduction
 
-##### Llama
 
-- `GPU (min 24GB)` _(or above)_
-- `Hugging Face Credentials (Account, Token)`
-- `Llama-3.2-11B-Vision-Instruct` _(or above)_
+### Combine WavLM Large and RawNet2.5
 
-##### OpenAI
+**WavLM Large (Transformer-based)**
 
-- `GPU (min 12GB)` _(for other process such as `faster whisper` & `NeMo`)_
-- At least one of the following is required:
-    - `OpenAI Credentials (Account, API Key)`
-    - `Azure OpenAI Credentials (Account, API Key, API Base URL)`
+- Developed by Microsoft, WavLM relies on self-attention layers that capture fine-grained (`frame-level`) or “micro”
+  acoustic features.
+- It produces a **1024-dimensional** embedding, focusing on localized, short-term variations in the speech signal.
+
+**RawNet (SincConv + Residual Blocks)**
+- Uses SincConv and residual blocks to summarize the raw signal on a broader (macro) scale.
+- The **Attentive Stats Pooling** layer aggregates mean + std across the entire time axis (with learnable 
+attention), capturing global speaker characteristics.
+- Outputs a **256-dimensional** embedding, representing the overall, longer-term structure of the speech.
+
+These two approaches complement each other: WavLM excels at fine-detailed temporal features, while RawNet captures a
+more global, statistical overview.
+
+## Architectural Flow
+
+1. **Raw Audio Input**
+    - **No manual preprocessing** (like MFCC or mel-spectrogram).
+    - A minimal **Transform** and **Segment** step (mono conversion, resample, slice/pad) formats the data into shape
+      `(B, T)`.
+
+2. **RawNet (Macro Features)**
+    - **SincConv**: Learns band-pass filters in a frequency-focused manner, constrained by low/high cutoff frequencies.
+    - **ResidualStack**: A set of residual blocks (optionally with SEBlock) refines the representation.
+    - **Attentive Stats Pooling**: Aggregates time-domain information into mean and std with a learnable attention
+      mechanism.
+    - A final **FC** layer yields a 256-dimensional embedding.
+
+3. **WavLM (Micro Features)**
+    - Transformer layers operate at `frame-level`, capturing fine-grained details.
+    - Produces a **1024-dimensional** embedding after mean pooling across time.
+
+4. **Fusion**
+    - Concatenate the **256-dim** RawNet embedding with the **1024-dim** WavLM embedding, resulting in **1280**
+      dimensions.
+    - A **Linear(1280 → 256) + ReLU** layer reduces it to a **256-dim Fusion Embedding**, combining micro and macro
+      insights.
+
+5. **AMSoftmax Loss**
+    - During training, the 256-dim fusion embedding is passed to an AMSoftmax classifier (with margin + scale).
+    - Embeddings of the same speaker are pulled closer, while different speakers are pushed apart in the angular space.
+
+---
+
+## 3. A Single End-to-End Learning Pipeline
+
+- **Fully Automatic**: Raw waveforms go in, final speaker embeddings come out.
+- **No Manual Feature Extraction**: We do not rely on handcrafted features like MFCC or mel-spectrogram.
+- **Data-Driven**: The model itself figures out which frequency bands or time segments matter most.
+- **Enhanced Representation**: WavLM delivers local detail, RawNet captures global stats, leading to a more robust
+  speaker representation.
+
+---
+
+## 4. Why Avoid Preprocessing?
+
+- **Deep Learning Principle**: The model should learn how to process raw signals rather than relying on human-defined
+  feature pipelines.
+- **Better Generalization**: Fewer hand-tuned hyperparameters; the model adapts better to various speakers, languages,
+  and environments.
+- **Scientific Rigor**: Manual feature engineering can introduce subjective design choices. Letting the network learn
+  directly from data is more consistent with data-driven approaches.
+
+---
+
+## 5. Summary & Advantages
+
+1. **Micro + Macro Features Combined**
+    - Captures both short-term acoustic nuances (WavLM) and holistic temporal stats (RawNet).
+
+2. **Truly End-to-End**
+    - Beyond minimal slicing/padding, all layers are trainable.
+    - No handcrafted feature extraction is involved.
+
+3. **Performance**
+    - Potentially outperforms using WavLM or RawNet alone in standard metrics like EER or minDCF.
+
+In essence, **WavLM + RawNet** merges two scales of speaker representation to produce a **rich, unified embedding**. By
+staying fully end-to-end, the architecture remains flexible and can leverage large amounts of data for even better
+results in speaker verification tasks.
 
 ---
 
@@ -217,6 +296,46 @@ $$
 - [x] Summary
 - [x] Conflict Detection
 - [x] Topic Detection
+- [x] **WavLM-Based Embeddings**: *Leverages WavLM to generate high-quality speech representations, improving speaker identification.*
+- [x] **Multi-Scale Diarization (MSDD)**: *Applies multi-scale inference for precise speaker segmentation, even with overlapping speech.*
+- [x] **Scalable Pipeline**: *Modular design allows easy integration and customization for various diarization tasks or research experiments.*
+
+##### Models
+
+- [x] OneDCNN
+- [x] AdvancedOneDCNN
+- [x] OneDSelfONN
+- [x] AdvancedOneDSelfONN
+
+---
+
+### Reports
+
+##### Metrics
+
+##### AdvancedOneDSelfONN
+
+![Final Test Confusion Matrix](.docs/report/img/confusion_matrix_test.png)
+![Final Train Confusion Matrix](.docs/report/img/confusion_matrix_train.png)
+![Final Validation Confusion Matrix](.docs/report/img/confusion_matrix_val.png)
+![Training Curves](.docs/report/img/training.png)
+
+##### Benchmark
+
+Below is an example benchmark comparing **Diarization Error Rate (DER)** across different models on a given dataset:
+
+| Model                | DER (%) |
+|----------------------|--------:|
+| **MSDD (Titanet)**   |     8.9 |
+| **MSDD (WavLMMSDD)** |     7.4 |
+| **Pyannote**         |    10.2 |
+
+> **Note**
+> - The above DER values are illustrative.
+> - “MSDD (Titanet)” and “MSDD (WavLMMSDD)” indicate two different embedding sources (Titanet vs. WavLM).
+> - DER measurements may vary depending on the dataset, audio conditions, and evaluation methodology.
+> - For a detailed notebook showing how this benchmark was performed, please see
+    > [`notebook/benchmark.ipynb`](notebook/benchmark.ipynb).
 
 ---
 
@@ -228,16 +347,29 @@ $$
 
 ---
 
+### Prerequisites
+
+##### Llama
+
+- `GPU (min 24GB)` _(or above)_
+- `Hugging Face Credentials (Account, Token)`
+- `Llama-3.2-11B-Vision-Instruct` _(or above)_
+
+##### OpenAI
+
+- `GPU (min 12GB)` _(for other process such as `faster whisper` & `NeMo`)_
+- At least one of the following is required:
+    - `OpenAI Credentials (Account, API Key)`
+    - `Azure OpenAI Credentials (Account, API Key, API Base URL)`
+
+---
+
 ### Installation
 
 ##### Linux/Ubuntu
 
 ```bash
 sudo apt update -y && sudo apt upgrade -y
-```
-
-```bash
-sudo apt install ffmpeg -y
 ```
 
 ```bash
@@ -284,6 +416,16 @@ DB_PASSWORD=
 DB_HOST=
 DB_PORT=
 DB_URL=
+```
+
+##### Dataset Download
+
+```bash
+aws s3 sync --no-sign-request s3://physionet-open/challenge-2017/1.0.0/training .data/raw/train
+```
+
+```bash
+aws s3 sync --no-sign-request s3://physionet-open/challenge-2017/1.0.0/validation .data/raw/validation
 ```
 
 ---
@@ -351,6 +493,47 @@ sudo systemctl restart grafana-server
 sudo systemctl daemon-reload
 ```
 
+---
+
+### Usage
+
+```python
+from wavlmmsdd.audio.diarization.diarize import Diarizer
+from wavlmmsdd.audio.feature.embedding import WavLMSV
+from wavlmmsdd.audio.preprocess.resample import Resample
+from wavlmmsdd.audio.preprocess.convert import Convert
+from wavlmmsdd.audio.utils.utils import Build
+
+def main():
+    # Audio Path
+    audio_path = "ae.wav"
+
+    # Resample to 16000 Khz
+    resampler = Resample(audio_file=audio_path)
+    wave_16k, sr_16k = resampler.to_16k()
+
+    # Convert to Mono
+    converter = Convert(waveform=wave_16k, sample_rate=sr_16k)
+    converter.to_mono()
+    saved_path = converter.save()
+
+    # Build Manifest File
+    builder = Build(saved_path)
+    manifest_path = builder.manifest()
+
+    # Embedding
+    embedder = WavLMSV()
+
+    # Diarization
+    diarizer = Diarizer(embedding=embedder, manifest_path=manifest_path)
+    diarizer.run()
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
 ### File Structure
 
 ```Text
@@ -414,7 +597,8 @@ sudo systemctl daemon-reload
 
 ##### Branches
 
-- [Main](https://github.com/bunyaminergen/Callytics/main/)
+- [main](https://github.com/bunyaminergen/Callytics/main/)
+- [develop](https://github.com/bunyaminergen/Callytics/develop/)
 
 ---
 
@@ -449,6 +633,7 @@ sudo systemctl daemon-reload
 ### Documentations
 
 - [RESOURCES](.docs/documentation/RESOURCES.md)
+- [CONTRIBUTING](.docs/documentation/CONTRIBUTING.md)
 
 ---
 
