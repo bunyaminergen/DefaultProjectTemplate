@@ -65,10 +65,12 @@ For more detail, check [PEP 8 – Style Guide for Python Code | peps.python.org]
 
 Use `NumPy` format for docstrings in both functions and classes:
 
-- Each function or class should have a docstring explaining its purpose,
-  parameters, return values, and examples if applicable.
-- For classes, include a class-level docstring that describes the overall purpose
-  of the class, any parameters for `__init__`, and details on attributes and methods.
+- Each function or class should have a docstring explaining its purpose, parameters, return values, and examples if
+  applicable.
+- For classes, include a class-level docstring that describes the overall purpose of the class, any parameters for
+  `__init__`, and details on attributes and methods.
+- If you include references (e.g., research papers, algorithms, or external resources) in your docstring, create a
+  separate `References` section clearly listing these sources at the end of your docstring.
 
 Example for a function:
 
@@ -102,6 +104,10 @@ def example_function(
     True
     >>> example_function(0, '')
     False
+
+    References
+    ----------
+    * Doe, John. "A Study on Example Functions." Journal of Examples, 2021.
     """
     return bool(param1) and bool(param2)
 ```
@@ -111,41 +117,47 @@ Example for a class:
 ```python
 class MyClass:
     """
-    MyClass is a simple example class that demonstrates the use of docstrings in NumPy format.
+    MyClass demonstrates the use of docstrings with a separate References section.
 
-    This class provides an example of how to structure a docstring in the NumPy format,
-    covering attributes, methods, and usage examples.
+    This class provides an example of structuring docstrings, including attributes,
+    methods, usage examples, and a references section when external sources are cited.
 
     Parameters
     ----------
     param1 : str
-        Description of `param1`, explaining its purpose and any specific formatting or constraints.
+        Description of `param1`, explaining its purpose and specific constraints.
     param2 : int, optional
-        Description of `param2`. Defaults to 0 if not provided.
+        Description of `param2`. Defaults to 0.
 
     Attributes
     ----------
     attribute1 : str
         Description of `attribute1`, explaining its purpose and possible values.
     attribute2 : int
-        Description of `attribute2`, outlining any constraints or expected values.
+        Description of `attribute2`, outlining constraints or expected values.
 
     Methods
     -------
     example_method(param1, param2=None)
-        Example method description, explaining what it does and how `param1` and `param2` are used.
+        Example method description.
 
     Examples
     --------
-    Create an instance of MyClass and use its methods:
+    Create an instance and use methods:
 
     >>> my_instance = MyClass("example", 5)
     >>> my_instance.example_method("sample")
+
+    References
+    ----------
+    * Smith, Jane. "Guide to Effective Python Documentation." Python Publishing, 2020.
+    * Hu, Jie, Li Shen, and Gang Sun. "Squeeze-and-Excitation Networks."
+      IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2018.
     """
 
     def __init__(self, param1, param2=0):
         """
-        Initializes the class with the provided attributes.
+        Initializes the class.
 
         Parameters
         ----------
@@ -160,7 +172,7 @@ class MyClass:
     @staticmethod
     def example_method(param1, param2=None):
         """
-        Example method performing a sample action.
+        Example method.
 
         Parameters
         ----------
@@ -177,8 +189,8 @@ class MyClass:
         return bool(param1) and bool(param2)
 ```
 
-This structure ensures that all elements of classes and functions are documented in a clear and consistent way,
-enhancing readability and usability.
+This structure ensures clear, consistent, and comprehensive documentation of classes and functions, including proper
+citation of external sources.
 
 ##### Type Annotation
 
