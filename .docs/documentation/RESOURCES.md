@@ -82,7 +82,7 @@
 
 ---
 
-## Hugging Face
+## Dataset
 
 - [Source 1](https://source1.org/)
 - [Source 2](https://source2.org/)
