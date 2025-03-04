@@ -11,19 +11,19 @@ from src.utils.type.schema import LoggerType, SingleLineConsoleFormatterType, Si
 class SingleLineConsoleFormatter(logging.Formatter):
     def __init__(
             self,
-            app: Annotated[str, "Application name"],
+            app: Annotated[str, "Application name"] = "Ayvaz",
             date_format: Annotated[Optional[str], "Date format"] = None,
     ) -> None:
         tmp_logger = logging.getLogger(__name__)
 
         try:
-            config = SingleLineConsoleFormatterType(app=app, date_format=date_format)
+            settings = SingleLineConsoleFormatterType(app=app, date_format=date_format)
         except ValidationError as e:
             tmp_logger.error("Invalid parameters for SingleLineConsoleFormatter: %s", e.json())
             raise
 
-        self.app = config.app
-        self.date_format = config.date_format
+        self.app = settings.app
+        self.date_format = settings.date_format
 
         console_format = "%(asctime)s - %(app)s - %(levelname)s - %(name)s - %(message)s"
         super().__init__(fmt=console_format, datefmt=self.date_format)
@@ -36,19 +36,19 @@ class SingleLineConsoleFormatter(logging.Formatter):
 class SingleLineFileFormatter(logging.Formatter):
     def __init__(
             self,
-            app: Annotated[str, "Application name"],
+            app: Annotated[str, "Application name"] = "Ayvaz",
             date_format: Annotated[Optional[str], "Date format"] = None,
     ) -> None:
         tmp_logger = logging.getLogger(__name__)
 
         try:
-            config = SingleLineFileFormatterType(app=app, date_format=date_format)
+            settings = SingleLineFileFormatterType(app=app, date_format=date_format)
         except ValidationError as e:
             tmp_logger.error("Invalid parameters for SingleLineFileFormatter: %s", e.json())
             raise
 
-        self.app = config.app
-        self.date_format = config.date_format
+        self.app = settings.app
+        self.date_format = settings.date_format
 
         file_format = "%(asctime)s - %(app)s - %(levelname)s - %(name)s - %(message)s"
         super().__init__(fmt=file_format, datefmt=self.date_format)
@@ -62,7 +62,7 @@ class Logger:
     def __init__(
             self,
             name: Annotated[str, "Logger name"],
-            app: Annotated[str, "Application name"],
+            app: Annotated[str, "Application name"] = "Ayvaz",
             path: Annotated[str, "Folder to store log files"] = ".logs",
             file: Annotated[str, "Log file name"] = ".log",
             console_level: Annotated[int, "Console log level"] = logging.DEBUG,

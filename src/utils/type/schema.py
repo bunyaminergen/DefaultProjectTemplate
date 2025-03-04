@@ -67,10 +67,10 @@ class RootConfig(BaseModel):
 
 # Logger
 class LoggerType(BaseModel):
-    name: str = Field(..., description="Logger name")
-    app: str = Field(..., description="Application name")
-    path: str = Field(".logs", description="The folder in which log files are stored")
-    file: str = Field(".log", description="Name of the log file")
+    name: constr(min_length=1) = Field(..., description="Logger name")
+    app: constr(min_length=1) = Field("Ayvaz", description="Application name")
+    path: constr(min_length=1) = Field(".logs", description="The folder in which log files are stored")
+    file: constr(min_length=1) = Field(".log", description="Name of the log file")
     console_level: conint(ge=0) = Field(logging.DEBUG, description="Console log level")
     file_level: conint(ge=0) = Field(logging.DEBUG, description="File log level")
     max_bytes: conint(gt=0) = Field(5_000_000, description="Maximum file size for rotation")
@@ -79,10 +79,10 @@ class LoggerType(BaseModel):
 
 
 class SingleLineConsoleFormatterType(BaseModel):
-    app: constr(min_length=1) = Field(..., description="Application name")
+    app: constr(min_length=1) = Field("Ayvaz", description="Application name")
     date_format: Optional[str] = Field(None, description="Date format")
 
 
 class SingleLineFileFormatterType(BaseModel):
-    app: constr(min_length=1) = Field(..., description="Application name")
+    app: constr(min_length=1) = Field("Ayvaz", description="Application name")
     date_format: Optional[str] = Field(None, description="Date format")
