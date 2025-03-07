@@ -1,0 +1,35 @@
+artifact_path: huggingface_model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.transformers
+    python_version: 3.12.9
+  transformers:
+    code: null
+    components:
+    - tokenizer
+    framework: pt
+    instance_type: TextGenerationPipeline
+    peft_adaptor: peft
+    pipeline_model_type: Qwen2ForCausalLM
+    source_model_name: Qwen/Qwen2.5-Coder-1.5B-Instruct
+    source_model_revision: 2e1fd397ee46e1388853d2af2c993145b0f1098a
+    task: text-generation
+    tokenizer_name: Qwen/Qwen2.5-Coder-1.5B-Instruct
+    tokenizer_revision: 2e1fd397ee46e1388853d2af2c993145b0f1098a
+    tokenizer_type: Qwen2TokenizerFast
+    torch_dtype: torch.bfloat16
+    transformers_version: 4.49.0
+is_signature_from_type_hint: false
+mlflow_version: 2.20.3
+model_size_bytes: 37003628
+model_uuid: e0a25b120d89478088d8921ef7b93364
+run_id: cfd8627471844c89bfab73d242fcab67
+signature:
+  inputs: '[{"type": "string", "required": true}]'
+  outputs: '[{"type": "string", "required": true}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-03-07 23:22:09.422580'

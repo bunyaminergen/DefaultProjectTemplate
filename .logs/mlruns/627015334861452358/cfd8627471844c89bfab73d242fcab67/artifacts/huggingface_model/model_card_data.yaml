@@ -1,0 +1,14 @@
+base_model:
+- Qwen/Qwen2.5-Coder-1.5B
+language:
+- en
+library_name: transformers
+license: apache-2.0
+license_link: https://huggingface.co/Qwen/Qwen2.5-Coder-1.5B-Instruct/blob/main/LICENSE
+pipeline_tag: text-generation
+tags:
+- code
+- codeqwen
+- chat
+- qwen
+- qwen-coder

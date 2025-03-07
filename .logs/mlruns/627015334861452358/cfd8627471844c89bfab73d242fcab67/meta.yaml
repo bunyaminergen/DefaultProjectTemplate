@@ -1,0 +1,15 @@
+artifact_uri: file:///home/bunyamin/Desktop/Assistant/.logs/mlruns/627015334861452358/cfd8627471844c89bfab73d242fcab67/artifacts
+end_time: 1741389732139
+entry_point_name: ''
+experiment_id: '627015334861452358'
+lifecycle_stage: active
+run_id: cfd8627471844c89bfab73d242fcab67
+run_name: AssistantFT
+run_uuid: cfd8627471844c89bfab73d242fcab67
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741389720815
+status: 3
+tags: []
+user_id: bunyamin
