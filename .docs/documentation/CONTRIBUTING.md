@@ -14,6 +14,8 @@ to make the contribution process clear and efficient.
     - [File Structure](#file-structure)
     - [Commit Message Guidelines](#commit-message-guidelines)
     - [Branches](#branches)
+    - [File Naming Convention](#file-naming-convention)
+    - [Versioning, Release, Tag](#versioning-release-tag)
 
 ---
 
@@ -59,7 +61,10 @@ import pandas as pd
 from my_module import my_function
 ```
 
-For more detail, check [PEP 8 – Style Guide for Python Code | peps.python.org](https://peps.python.org/pep-0008/)
+> **INFO**
+>
+> *For more detail, please check*:
+> - [PEP 8 – Style Guide for Python Code | peps.python.org](https://peps.python.org/pep-0008/)
 
 ##### Docstring
 
@@ -323,8 +328,10 @@ def multiply(
     return a * b
 ```
 
-For more detail,
-check [doctest — Test interactive Python examples — Python 3.13.1 documentation](https://docs.python.org/3/library/doctest.html)
+> **INFO**
+>
+> *For more detail, please check*:
+> - [doctest — Test interactive Python examples — Python 3.13.1 documentation](https://docs.python.org/3/library/doctest.html)
 
 ##### Main Execution
 
@@ -515,3 +522,85 @@ Example:
 - `experiment/improve-cache`
 
 ---
+
+### File Naming Convention
+
+This section explains how packages and modules should be named in this project.
+
+---
+
+##### Package & Module Naming
+
+The following rules apply to **both** packages and modules. To simplify these guidelines, the term **"file"** will be
+used as a generic reference to either a package or a module name.
+
+- **Single or Concise Compound Words:**
+    - Whenever possible, each file name should consist of **a single word** or **a short concatenation of words** (
+      written together).
+    - Use **lowercase letters** only, and **do not** use underscores (`_`).  
+      *(Although PEP 8 allows snake_case for modules, we do not prefer it in this project.)*
+    - If more than one word is necessary, write them **together** (e.g., `datautils`, `webparser`).
+
+- **Consistent Single-Word Usage:**
+    - Especially for package names, aim to keep them to **one word** whenever possible. If multiple words are necessary,
+      the package name should remain **short and clear**.
+
+- **Parent (Package) and Sub-Component (Module) Logic:**
+    - Use broader, more general names for packages (the “parent”).
+    - For modules (the “child”), use more specific names within the package to reflect their functionality.
+
+- **Examples:**
+    - **Packages**
+        - `utils`
+        - `model`
+    - **Modules**
+        - `gridsearch.py`
+        - `convolution.py`
+    - **Parent–Child (Directory Structure) Example**
+        - `src/model/backbone.py`
+        - `src/utils/log/manager.py`
+
+- **Bad Examples:**
+    - **Packages**
+        - `data_reader`  *(underscores are discouraged)*
+    - **Modules**
+        - `grid_search.py`  *(underscores are discouraged)*
+    - **Parent–Child (Directory Structure) Example**
+        - `src/train/training.py`  *(names are too similar or redundant)*
+
+---
+
+##### Test Files
+
+1. **Using the `test_` Prefix:**
+    - For test files, prepend `test_` to the **module** name being tested.
+    - **Example:** If the module name is `dataprocess.py`, then the test file should be named `test_dataprocess.py`.
+
+> **INFO**  
+> *For more details, please check:*
+> - [PEP 8 – Style Guide for Python Code | peps.python.org](https://peps.python.org/pep-0008/#:~:text=Modules%20should%20have%20short%2C%20all,use%20of%20underscores%20is%20discouraged)
+> - [PEP 423 – Naming conventions and recipes related to packaging | peps.python.org](https://peps.python.org/pep-0423/#follow-pep-8-for-syntax-of-package-and-module-names)
+
+---
+
+### Versioning, Release, Tag
+
+- When numbering versions, releases, or tags, **only use prime numbers** (e.g., 3, 5, 7, 11, 13...).
+- **Do not** use 2 (even though it is prime) or any non-prime numbers (4, 6, 8, 9, 10...).
+
+#### Examples
+
+**Good Examples** (using only prime numbers, excluding 2):
+
+- **Tag**: `v3`
+- **Release**: `v3.5.7`
+- **Version**: `5.7.11`
+
+**Bad Examples**:
+
+- **Tag**: `v2` *(2 is prime but disallowed in this project)*
+- **Release**: `v1.2.3` *(1 is not prime, 2 is disallowed, 3 is prime but the rest are invalid)*
+- **Version**: `4.6.8` *(4, 6, 8 are not prime)*
+
+---
+
