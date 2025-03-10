@@ -57,7 +57,6 @@ please read the [CONTRIBUTING](.docs/documentation/CONTRIBUTING.md) first._
 
 ### Introduction
 
-
 ### Combine WavLM Large and RawNet2.5
 
 **WavLM Large (Transformer-based)**
@@ -67,9 +66,10 @@ please read the [CONTRIBUTING](.docs/documentation/CONTRIBUTING.md) first._
 - It produces a **1024-dimensional** embedding, focusing on localized, short-term variations in the speech signal.
 
 **RawNet (SincConv + Residual Blocks)**
+
 - Uses SincConv and residual blocks to summarize the raw signal on a broader (macro) scale.
-- The **Attentive Stats Pooling** layer aggregates mean + std across the entire time axis (with learnable 
-attention), capturing global speaker characteristics.
+- The **Attentive Stats Pooling** layer aggregates mean + std across the entire time axis (with learnable
+  attention), capturing global speaker characteristics.
 - Outputs a **256-dimensional** embedding, representing the overall, longer-term structure of the speech.
 
 These two approaches complement each other: WavLM excels at fine-detailed temporal features, while RawNet captures a
@@ -296,9 +296,12 @@ $$
 - [x] Summary
 - [x] Conflict Detection
 - [x] Topic Detection
-- [x] **WavLM-Based Embeddings**: *Leverages WavLM to generate high-quality speech representations, improving speaker identification.*
-- [x] **Multi-Scale Diarization (MSDD)**: *Applies multi-scale inference for precise speaker segmentation, even with overlapping speech.*
-- [x] **Scalable Pipeline**: *Modular design allows easy integration and customization for various diarization tasks or research experiments.*
+- [x] **WavLM-Based Embeddings**: *Leverages WavLM to generate high-quality speech representations, improving speaker
+  identification.*
+- [x] **Multi-Scale Diarization (MSDD)**: *Applies multi-scale inference for precise speaker segmentation, even with
+  overlapping speech.*
+- [x] **Scalable Pipeline**: *Modular design allows easy integration and customization for various diarization tasks or
+  research experiments.*
 
 ##### Models
 
@@ -612,21 +615,28 @@ if __name__ == "__main__":
 - [ ] **Warnings:** Add meaningful and detailed warning messages for better user guidance.
 - [ ] **Real-Time Analysis:** Enable real-time analysis capabilities within the system.
 - [ ] **Dockerization:** Containerize the repository to ensure seamless deployment and environment consistency.
-- [ ] **New Transcription Models:** Integrate and test new transcription models suchas [AIOLA’s Multi-Head Speech Recognition Model](https://venturebeat.com/ai/aiola-drops-ultra-fast-multi-head-speech-recognition-model-beats-openai-whisper/).
-- [ ] **Noise Reduction Model:** Identify, test, and integrate a deep learning-based noise reduction model. Consider existing models like **Facebook Research Denoiser**, **Noise2Noise**, **Audio Denoiser CNN**, and **Speech-Enhancement with Deep Learning**. Write test scripts for evaluation, and if necessary, train a new model for optimal performance.
+- [ ] **New Transcription Models:** Integrate and test new transcription models
+  suchas [AIOLA’s Multi-Head Speech Recognition Model](https://venturebeat.com/ai/aiola-drops-ultra-fast-multi-head-speech-recognition-model-beats-openai-whisper/).
+- [ ] **Noise Reduction Model:** Identify, test, and integrate a deep learning-based noise reduction model. Consider
+  existing models like **Facebook Research Denoiser**, **Noise2Noise**, **Audio Denoiser CNN**, and **Speech-Enhancement
+  with Deep Learning**. Write test scripts for evaluation, and if necessary, train a new model for optimal performance.
 
 ##### Considerations
 
 - [ ] Transform the code structure into a pipeline for better modularity and scalability.
 - [ ] Publish the repository as a Python package on **PyPI** for wider distribution.
 - [ ] Convert the repository into a Linux package to support Linux-based systems.
-- [ ] Implement a two-step processing workflow: perform **diarization** (speaker segmentation) first, then apply **transcription** for each identified speaker separately. This approach can improve transcription accuracy by leveraging speaker separation.
-- [ ] Enable **parallel processing** for tasks such as diarization, transcription, and model inference to improve overall system performance and reduce processing time.
+- [ ] Implement a two-step processing workflow: perform **diarization** (speaker segmentation) first, then apply *
+  *transcription** for each identified speaker separately. This approach can improve transcription accuracy by
+  leveraging speaker separation.
+- [ ] Enable **parallel processing** for tasks such as diarization, transcription, and model inference to improve
+  overall system performance and reduce processing time.
 - [ ] Explore using **Docker Compose** for multi-container orchestration if required.
-- [ ] Upload the models and relevant resources to **Hugging Face** for easier access, sharing, and community collaboration.
+- [ ] Upload the models and relevant resources to **Hugging Face** for easier access, sharing, and community
+  collaboration.
 - [ ] Consider writing a **Command Line Interface (CLI)** to simplify user interaction and improve usability.
-- [ ] Test the ability to use **different language models (LLMs)** for specific tasks. For instance, using **BERT** for profanity detection. Evaluate their performance and suitability for different use cases as a feature.
-
+- [ ] Test the ability to use **different language models (LLMs)** for specific tasks. For instance, using **BERT** for
+  profanity detection. Evaluate their performance and suitability for different use cases as a feature.
 
 ---
 
